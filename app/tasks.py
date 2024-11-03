@@ -1,9 +1,8 @@
 import os
-
-from config import settings
+from celery import Celery
 from PIL import Image
 
-from celery import Celery
+from config import settings
 
 celery = Celery('tasks', broker=settings.BROKER_URL, backend=settings.RESULT_BACKEND)
 

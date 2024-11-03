@@ -1,11 +1,11 @@
 import logging
 import os
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from api.api_v1.routers.images import router as image_router
 from api.api_v1.routers.tasks import router as task_router
 from config import settings
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 
 
 def create_img_folders_on_startup():

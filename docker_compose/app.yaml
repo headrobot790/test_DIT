@@ -6,7 +6,7 @@ services:
     container_name: main-app
     ports:
       - "${API_PORT}:8000"
-    command: "uvicorn --factory main:create_app --reload --log-level debug --host 0.0.0.0 --port 8000"
+    command: "uvicorn --factory main:create_app --host 0.0.0.0 --port 8000"
     env_file:
       - ../.env
     volumes:
@@ -31,7 +31,7 @@ services:
       dockerfile: ./celery_app/Dockerfile
     container_name: celery_worker
     command: >
-      bash -c "ls -la & tree && python celery_app/start_celery.py"
+      bash -c "python celery_app/start_celery.py"
     volumes:
       - ../client_files/uploads:/app/uploads
       - ../client_files/resized:/app/resized

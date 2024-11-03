@@ -1,13 +1,11 @@
 import logging
 import os
-
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, File, UploadFile
 from starlette.responses import FileResponse
 
 from api.exceptions import FileNotExistException, InvalidUUIDLinkException
-from api.schemas.images import ImageUploadResponse, ImageURL
+from api.schemas.images import ImageUploadResponse
 from config import settings
-
 from services.image_service import handle_upload
 from services.url_service import is_valid_uuid
 

@@ -1,13 +1,13 @@
 import os
 import uuid
-from io import BytesIO
-
 from fastapi import UploadFile
-
-from api.exceptions import MaxFileSizeExceedException, supported_formats, InvalidFiletype, Unknown_MIME_Info
-from config import settings
+from io import BytesIO
 from PIL import Image
+
+from api.exceptions import InvalidFiletype, MaxFileSizeExceedException, Unknown_MIME_Info, supported_formats
+from config import settings
 from tasks import process_image
+
 
 async def handle_upload(file: UploadFile):
     if file.content_type not in ["image/jpeg", "image/png"]:
@@ -48,7 +48,6 @@ async def valid_image(file_path: os.path) -> bool:
                 return False
 
             if len(image_data) > settings.MAX_FILE_SIZE * 1024:
-                print(f"Max file size was exceed limit: {len(image_data) // 1024} Kb")
                 raise MaxFileSizeExceedException
 
             image_io = BytesIO(image_data)

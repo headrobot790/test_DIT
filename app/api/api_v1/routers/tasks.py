@@ -3,7 +3,6 @@ from fastapi import APIRouter, Request
 from api.exceptions import CeleryException
 from celery.result import AsyncResult
 
-
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
