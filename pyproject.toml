@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "test-dit"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "^2.9.2"
+pillow = "^11.0.0"
+celery = {extras = ["redis"], version = "^5.4.0"}
+fastapi = {extras = ["all"], version = "^0.115.4"}
+pydantic-settings = "^2.6.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.29.0"
+isort = "^5.13.2"
+autoflake = "^2.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.isort]
+known_first_party = ["app", "celery"]
+sections = ["STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]

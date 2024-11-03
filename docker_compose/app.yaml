@@ -1,0 +1,48 @@
+services:
+  main-app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: main-app
+    ports:
+      - "${API_PORT}:8000"
+    command: "uvicorn --factory main:create_app --reload --log-level debug --host 0.0.0.0 --port 8000"
+    env_file:
+      - ../.env
+    volumes:
+      - ../client_files/uploads:/app/uploads
+      - ../client_files/resized:/app/resized
+    networks:
+      - backend
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  celery_worker:
+    build:
+      context: ..
+      dockerfile: ./celery_app/Dockerfile
+    container_name: celery_worker
+    command: >
+      bash -c "ls -la & tree && python celery_app/start_celery.py"
+    volumes:
+      - ../client_files/uploads:/app/uploads
+      - ../client_files/resized:/app/resized
+    env_file:
+      - ../.env
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+
+networks:
+  backend:
+    driver: bridge
